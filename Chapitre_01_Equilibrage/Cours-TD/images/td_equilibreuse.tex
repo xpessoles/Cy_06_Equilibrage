@@ -1,0 +1,205 @@
+\documentclass[14pt,a4paper]{article}
+\usepackage[francais]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{pgf}
+%\usepackage[draft]{pgf}
+\usepackage{pgfarrows, pgfnodes}
+\usepackage{amsmath}
+\usepackage{amssymb}     
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{multido}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{versions}
+\usepackage{picins}
+\usepackage{colortbl}
+\usepackage[small, hang]{caption2}
+\includeversion{courte}
+\excludeversion{complete}
+\usepackage{parallel}
+\usepackage{algorithm2e}
+\usepackage{fullpage}
+\usepackage{ulem}
+%\usepackage{fancybox}
+\usepackage{hyperref}
+\usepackage{placeins}
+
+\hypersetup{colorlinks, citecolor=blue, filecolor=black, linkcolor=blue, urlcolor=blue} 
+
+\renewcommand{\captionfont}{\it \small}
+\renewcommand{\captionlabelfont}{\it \bf \small}
+\renewcommand{\captionlabeldelim}{ : }
+
+\setlength{\voffset}{-80pt}
+\setlength{\footskip}{30pt}
+\setlength{\headheight}{16pt}
+\setlength{\headsep}{40pt}
+
+\addtolength{\oddsidemargin}{0pt}
+\addtolength{\evensidemargin}{-20pt}
+\addtolength{\textwidth}{10pt}
+\addtolength{\textheight}{+60pt}
+
+\definecolor{rouge}{rgb}{1,0,0}
+\definecolor{vert}{rgb}{0.2,0.627,0.173}
+\definecolor{bleu}{rgb}{0.039,0.314,0.631}
+\definecolor{orange}{rgb}{1,0.498,0}
+\definecolor{tab}{rgb}{0.74,0.74,0.85}
+\definecolor{rose}{rgb}{1,0.7,0.7}
+\definecolor{bleuclair}{rgb}{0.139,0.514,0.831}
+\definecolor{roseclair}{rgb}{1,0.85,0.85}
+
+
+\renewcommand{\emph}[1]{\textcolor{black}{\bf{#1}}}
+\newcommand{\sou}[1]{\underline{#1}}
+%\newcommand{\tend}[1]{\und{\und{#1}}}
+\newcommand{\und}[1]{\overrightarrow{#1}}
+\newcommand{\tend}[1]{\underline{\underline{#1}}}
+\newcommand{\tenq}[1]{\mathit{\mathbf{#1}}}
+
+\newcommand{\mat}[1]{\mathrm{#1}}
+\newcommand{\vect}[1]{{\mathrm{#1}}}
+\newcommand{\VEC}{\overrightarrow}
+\newcommand{\sivol}[1]{ S_{i}^{(V)} }
+
+%\newcommand{\tr}[1]{{\vphantom{#1}}^{\mathit t}{#1}}
+\newcommand{\tr}[1]{{#1}^{\mathit{T}}}
+\newcommand{\com}[1]{\nocite{#1}}
+
+\newcommand{\saut}[1]{\sautg #1 \sautd}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+
+\newcommand{\veci}[2]{\vect{#1}_{\mathrm{#2}}}
+\newcommand{\vech}[1]{\vect{\hat{#1}}}
+\newcommand{\vechi}[2]{\vect{\hat{#1}}_{\mathrm{#2}}}
+\newcommand{\vecsh}[1]{\vect{\sautg #1 \sautd}}
+
+\def\sautg{\mbox{\textbf{[\hspace{-.14em}[}}}
+\def\sautd{\mbox{\textbf{]\hspace{-.14em}]}}}
+
+         
+                                        
+\renewcommand{\headrulewidth}{0pt}      
+\renewcommand{\footrulewidth}{0pt}  
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+%\sffamily
+\begin{center}
+	\Large{TD - Equilibreuse dynamique}
+\end{center}
+
+\rmfamily
+
+\bigskip
+\bigskip
+
+\section{Analyse du fonctionnement de l'équilibreuse}
+\emph{Définition du problème}\\
+La figure ci-dessous représente le montage d'une roue $S_3$ sur une équilibreuse $S_0$.
+
+\begin{figure}[H]
+\centerline{
+\pgfimage[width=0.5\linewidth]{figure_intro}} 
+\caption{Définition du problème}
+\end{figure}
+
+\begin{itemize}
+\item Le référentiel $R_0$ associé à $S_0$ est supposé comme étant galiléen.
+\item La roue $S_3$ est en liaison pivot d'axe ($O_3$,$\overrightarrow{z}_3$) avec l'équilibreuse $S_0$.
+Le paramètre du mouvement de $S_3/S_0$ est défini par $\theta=(\overrightarrow{x}_0,\overrightarrow{x}_3)$.
+\item La roue $S_3$ est de masse $m_3$, de centre de masse $G_3$ tel que $\overrightarrow{O_3G_3}=b \overrightarrow{y}_3+c\overrightarrow{z}_3$.
+\item La roue $S_3$, bien qu'ayant une symétrie théorique de révolution est en réalité imparfaite. Sa matrice d'inertie en $O_3$ est donnée par :
+$$
+I(O_3,S_3)=\left(\begin{array}{ccc}
+A_3 & -F_3 & -E_3 \\ 
+-F_3 & B_3 & -D_3 \\ 
+-E_3 & -D_3 & C_3
+\end{array} \right)_{R_3}
+$$
+\item Un moteur, non représenté, exerce sur $S_3$ un torseur couple $C_m \overrightarrow{z}_{0,3}$.
+\item Les actions dues à l'attraction terrestre sont négligées.
+\end{itemize}
+
+
+\emph{Analyse préliminaire}
+\begin{enumerate}
+\item Faire le bilan des actions mécaniques extérieures pour $\left\{S_3\right\}$.
+\item Déterminer le torseur dynamique : $\mathcal{D}\left(O_3,S_3/S_0\right)$.
+\item Déduire du Principe Fondamental de la Dynamique, les équations de mouvement.
+\end{enumerate}
+
+\FloatBarrier
+\section{Notion d'équilibrage}
+Pour éviter les vibrations, il faut rendre l'action mécanique extérieure s'exerçant sur $S_3$ la plus constante possible. Il faut donc qu'elle soit indépendante de la vitesse ($\dot{\theta}$).
+\begin{itemize}
+\item On en tire les conditions de \textbf{l'équilibrage statique} en vérifiant cette définition sur les équations dynamiques de mouvement en résultante.
+\item On en tire les conditions de \textbf{l'équilibrage dynamique} en vérifiant cette définition sur les équations dynamiques de mouvement en moment.
+\end{itemize}
+
+\textbf{Questions :}
+\begin{enumerate}
+\item Déterminer les conditions d'équilibrage statique.
+\item Déterminer les conditions d'équilibrage dynamique.
+\end{enumerate}
+
+\emph{Illustration de l'équilibrage}
+
+\begin{figure}[tb]
+    \centering
+    \begin{tabular}{ccc}
+    \resizebox{0.2\columnwidth}{!}{\includegraphics{equ1.pdf}} &
+\resizebox{0.2\columnwidth}{!}{\includegraphics{equ2.pdf}} &
+\resizebox{0.2\columnwidth}{!}{\includegraphics{equ3.pdf}}\\
+(a) & (b) & (c)
+
+    \end{tabular}
+    \caption{Illustration avec deux masses ponctuelles}
+    \label{fig:map}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{(a)} : Les 2 masses ne sont pas à la même distance de l'axe de rotation : on n'a ni équilibrage statique ni équilibrage dynamique.
+\item \textbf{(b)} : Les deux masses sont à la même distance de l'axe : on a réalisé l'équilibrage statique.
+\item \textbf{(c)} : Les deux masses sont en face l'une de l'autre : on a réalisé l'équilibrage dynamique.
+\end{itemize}
+
+
+\section{Réalisation de l'équilibrage}
+
+On utilise alors deux masses d'équilibrage ponctuelles $m_1$ et $m_2$ localisées sur la jante (rayon r) sur sa partie avant (masse $m_1$) et sur sa partie arrière (masse $m_2$) par les angles $\Phi_1$ et $\Phi_2$.
+On définit alors leur position par :
+\begin{itemize}
+\item $\overrightarrow{O_3G_1}=r \overrightarrow{x}_1+h\overrightarrow{z}_3$
+\item $\overrightarrow{O_3G_2}=r \overrightarrow{x}_2-h\overrightarrow{z}_3$
+\end{itemize}
+
+\begin{figure}[H]
+\centerline{
+\pgfimage[width=0.7\linewidth]{figure-masse-roue.pdf}} 
+\caption{Définition du problème avec la présence de masses d'équilibrage}
+\end{figure}
+
+\textbf{Questions :}
+\begin{enumerate}
+\item Traduire la relation donnée par l'équilibrage statique.
+\item Traduire la relation donnée par l'équilibrage dynamique.
+\end{enumerate}
+
+
+ 
+
+
+
+
+
+
+\end{document}
